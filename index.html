@@ -5,8 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordPress-Inspired Blog</title>
     <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('Pretendard-Regular.otf') format('opentype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('Pretendard-Bold.otf') format('opentype');
+            font-weight: bold;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Pretendard', Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -46,9 +56,11 @@
         }
         .blog-post h2 {
             margin-bottom: 0.5rem;
+            cursor: pointer;
+            color: blue;
         }
-        .blog-post p {
-            color: #555;
+        .blog-post h2:hover {
+            text-decoration: underline;
         }
         footer {
             text-align: center;
@@ -70,9 +82,9 @@
         <a href="#">Blog</a>
         <a href="#">Contact</a>
     </nav>
-    <div class="container">
-        <div class="blog-post">
-            <h2>Post Title 1</h2>
+    <div class="container" id="content">
+        <div class="blog-post" id="post1">
+            <h2 onclick="loadPost('post1')">Post Title 1</h2>
             <p><small>Published on January 20, 2025</small></p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien vel libero lacinia tempus.</p>
         </div>
@@ -90,5 +102,26 @@
     <footer>
         <p>&copy; 2025 My Blog. All rights reserved.</p>
     </footer>
+
+    <script>
+        function loadPost(postId) {
+            const content = document.getElementById('content');
+            if (postId === 'post1') {
+                content.innerHTML = `
+                    <div class="blog-post">
+                        <h2>Post Title 1</h2>
+                        <p><small>Published on January 20, 2025</small></p>
+                        <p>This is the full content of Post Title 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Integer vel sapien vel libero lacinia tempus. Praesent sed erat ut arcu tincidunt aliquam.</p>
+                        <button onclick="goBack()">Back to Posts</button>
+                    </div>
+                `;
+            }
+        }
+
+        function goBack() {
+            location.reload(); // 새로고침으로 원래 상태 복구
+        }
+    </script>
 </body>
 </html>
