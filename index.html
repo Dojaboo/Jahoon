@@ -106,6 +106,10 @@
     <script>
         function loadPost(postId) {
             const content = document.getElementById('content');
+
+            // Push the current state to the history stack
+            history.pushState({ page: 'post' }, '', '#post1');
+
             if (postId === 'post1') {
                 content.innerHTML = `
                     <div class="blog-post">
@@ -113,15 +117,34 @@
                         <p><small>Published on January 20, 2025</small></p>
                         <p>This is the full content of Post Title 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Integer vel sapien vel libero lacinia tempus. Praesent sed erat ut arcu tincidunt aliquam.</p>
-                        <button onclick="goBack()">Back to Posts</button>
                     </div>
                 `;
             }
         }
 
-        function goBack() {
-            location.reload(); // 새로고침으로 원래 상태 복구
-        }
+        // Listen for the popstate event to handle back navigation
+        window.addEventListener('popstate', (event) => {
+            const content = document.getElementById('content');
+
+            // Restore the original content if going back
+            content.innerHTML = `
+                <div class="blog-post" id="post1">
+                    <h2 onclick="loadPost('post1')">Post Title 1</h2>
+                    <p><small>Published on January 20, 2025</small></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien vel libero lacinia tempus.</p>
+                </div>
+                <div class="blog-post">
+                    <h2>Post Title 2</h2>
+                    <p><small>Published on January 18, 2025</small></p>
+                    <p>Proin nec ipsum nec dui blandit euismod. Suspendisse potenti. Phasellus facilisis, nisi non tincidunt volutpat.</p>
+                </div>
+                <div class="blog-post">
+                    <h2>Post Title 3</h2>
+                    <p><small>Published on January 15, 2025</small></p>
+                    <p>Cras euismod lacus ut lacus consequat, non fermentum ex varius. Quisque posuere mi eget urna euismod efficitur.</p>
+                </div>
+            `;
+        });
     </script>
 </body>
 </html>
